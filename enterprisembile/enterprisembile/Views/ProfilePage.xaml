@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="enterprisembile.Views.ProfilePage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Label FontSize="Large" Text="Profile" Margin="0,20,0,10" HorizontalOptions="Center" VerticalOptions="Start"></Label>
+            <ScrollView VerticalOptions="CenterAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Fill">
+                    <StackLayout HorizontalOptions="Start" VerticalOptions="Fill">
+                        <Label Margin="0,0,0,10" FontSize="Medium" FontAttributes="Bold" Text="Cardnumber"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" FontAttributes="Bold" Text="First name"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" FontAttributes="Bold" Text="Last name"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" FontAttributes="Bold" Text="Ping ping saldo"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" FontAttributes="Bold" Text="Role"></Label>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="End" VerticalOptions="Fill">
+                        <Label Margin="0,0,0,10" FontSize="Medium" Text="{Binding User.CardNumber}"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" Text="{Binding User.FirstName}"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" Text="{Binding User.LastName}"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" Text="{Binding User.PingPing}"></Label>
+                        <Label Margin="0,0,0,10" FontSize="Medium" Text="{Binding User.Role}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button Margin="0,0,0,30" VerticalOptions="End" Command="{Binding ShowQr}" Text="Show QR-code" HorizontalOptions="Center"></Button>
+        </StackLayout>
+    </ContentPage.Content>  
+</ContentPage>

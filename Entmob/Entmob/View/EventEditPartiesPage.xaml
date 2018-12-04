@@ -1,0 +1,185 @@
+﻿<Page
+    x:Class="Entmob.View.EventEditPartiesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Entmob.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding EditPartiesEventViewModel, Source={StaticResource ViewModelLocator}}"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Big">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="700"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="allTextBlock.(RelativePanel.Below)" Value="backButton"/>
+                        <Setter Target="allTextBlock.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                        <Setter Target="groupNameSearchBar.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                        <Setter Target="allPartyTypeRadioButton.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                        <Setter Target="lectorPartyTypeCheckBox.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                        <Setter Target="allPartiesListView.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="allTextBlock.(RelativePanel.Below)" Value="requiredPartiesListView"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ScrollViewer Name="ScrollViewer">
+            <RelativePanel>
+                <Button Name="backButton"
+                Content="Back"
+                Margin="15 15 0 10"
+                Width="155"
+                Command="{Binding BackCommand}"
+        />
+
+                <Button Name="saveButton"
+                Content="Save"
+                Width="155"
+                Margin="15 15 0 10"
+                RelativePanel.RightOf="backButton"
+                Command="{Binding SaveCommand}"
+        />
+
+                <Border Name="idTextBlock"
+                Margin="15 0 0 10"
+                Padding="5"
+                Background="Gainsboro"
+                Width="330"
+                RelativePanel.Below="backButton"
+        >
+                    <TextBlock 
+                Text="Required parties"    
+            />
+                </Border>
+
+                <TextBlock Name="eventTextBlock"
+                   Text="Event:"
+                   Margin="15 5"
+                   RelativePanel.Below="idTextBlock"/>
+
+                <TextBlock Name="eventNameTextblock"
+                   Margin="15 5"
+                   RelativePanel.Below="idTextBlock"
+                   RelativePanel.RightOf="eventTextBlock"
+                   Text="{Binding SelectedEvent.Title}"
+                   />
+
+                <ListView Name="requiredPartiesListView"
+                  Margin="15"
+                  Width="330"
+                  Background="Gainsboro"
+                  RelativePanel.Below="eventTextBlock"
+                  ItemsSource="{Binding ExpectedParties}"
+                  DisplayMemberPath="Name"
+                  >
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding RemovePartyCommand}" 
+                                              CommandParameter="{Binding ElementName=requiredPartiesListView, Path=SelectedItem}"
+                    />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </ListView>
+
+                <Border Name="allTextBlock"
+                Margin="15 0 0 10"
+                Padding="5"
+                Background="Gainsboro"
+                Width="330"
+        >
+                    <TextBlock 
+                Text="All parties"    
+            />
+                </Border>
+
+                <TextBox Name="groupNameSearchBar"
+                 PlaceholderText="Search Party"
+                 Margin="15 0 0 0" 
+                 Width="330"
+                 RelativePanel.Below="allTextBlock"
+        >
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="KeyUp">
+                            <core:InvokeCommandAction Command="{Binding FilterBarValueChangedCommand}" 
+                                              CommandParameter="{Binding ElementName=groupNameSearchBar, Path=Text}"
+                    />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </TextBox>
+
+                <RadioButton Name="allPartyTypeRadioButton"
+                     Content="All"
+                     Margin="15 0 0 0"
+                     IsChecked="True"
+                     GroupName="PartyTypes"
+                     Command="{Binding AllRadioButtonChangedCommand}"
+                     RelativePanel.Below="groupNameSearchBar"
+
+        />
+
+                <RadioButton Name="studentPartyRadioButton"
+                     Content="Student"
+                     Margin="15 0 0 0"
+                     GroupName="PartyTypes"
+                     Command="{Binding StudentRadioButtonChangedCommand}"
+                     RelativePanel.Below="groupNameSearchBar"
+                     RelativePanel.RightOf="allPartyTypeRadioButton"
+        />
+
+                <RadioButton Name="lectorPartyTypeCheckBox"
+                     Content="Teacher"
+                     Margin="15 0 0 0"
+                     GroupName="PartyTypes"
+                     Command="{Binding LectorRadioButtonChangedCommand}"
+                     RelativePanel.Below="allPartyTypeRadioButton"
+        />
+
+                <RadioButton Name="supervisorPartyTypeCheckBox"
+                     Content="Supervisor"
+                     Margin="15 0 0 0"
+                     GroupName="PartyTypes"
+                     Command="{Binding SupervisorRadioButtonChangedCommand}"
+                     RelativePanel.Below="allPartyTypeRadioButton"
+                     RelativePanel.RightOf="lectorPartyTypeCheckBox"
+        />
+
+                <ListView Name="allPartiesListView"
+                  Margin="15"
+                  Width="330"
+                  Background="Gainsboro"
+                  RelativePanel.Below="lectorPartyTypeCheckBox"
+                  ItemsSource="{Binding AllParties}"
+                  DisplayMemberPath="Name"
+        >
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding AddPartyCommand}" 
+                                              CommandParameter="{Binding ElementName=allPartiesListView, Path=SelectedItem}"
+                    />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </ListView>
+            </RelativePanel>
+        </ScrollViewer>
+    </RelativePanel>
+</Page>
+
+
+
+
+
+
+

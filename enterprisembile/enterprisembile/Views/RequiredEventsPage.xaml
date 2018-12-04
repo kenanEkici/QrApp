@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:converters="clr-namespace:enterprisembile.Converters;assembly=enterprisembile"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="enterprisembile.Views.RequiredEventsPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Label 
+                HorizontalOptions="Center" Text="Required events"
+                Margin="0,20,0,20"
+                FontSize="Large">
+            </Label>
+            <ScrollView>
+                <ListView
+                ItemsSource="{Binding Events}"
+                SeparatorColor="Gray"
+                SelectedItem="{Binding SelectedEvent, Mode=TwoWay}">
+                    <ListView.Behaviors>
+                        <b:EventToCommandBehavior EventName="ItemTapped" 
+                                          Command="{Binding SelectEventCommand}"
+                                          EventArgsConverter="{converters:ItemTappedEventArgsConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Label Margin="5" Grid.Column="0" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Start"/>
+                                    <Label Margin="5" Grid.Column="1" Text="{Binding Description}" HorizontalTextAlignment="Center" />
+                                    <Label Margin="5" Grid.Column="2" Text="{Binding Date, Converter={StaticResource DateConverter}}" HorizontalTextAlignment="End"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+            <Button 
+                HorizontalOptions="Center"
+                Text="Scan Events"
+                Command="{Binding ScanEventCommand}">                
+            </Button>
+        </StackLayout>    
+    </ContentPage.Content>
+</ContentPage>

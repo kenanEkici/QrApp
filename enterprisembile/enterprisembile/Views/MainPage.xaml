@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MasterDetailPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="enterprisembile.Views.MainPage"
+    Title="Menu">
+    
+ <MasterDetailPage.Master>
+    <ContentPage Title="Menu" Icon="hamburger.png">
+            <StackLayout Padding="40">
+                <Button Text="Events" Command="{Binding NavigateCommand}" CommandParameter="Navigation/EventMenuPage" />
+                <Button Text="Profile" Command="{Binding NavigateCommand}" CommandParameter="Navigation/ProfilePage" />
+          </StackLayout>
+    </ContentPage>
+  </MasterDetailPage.Master>
+  <MasterDetailPage.Detail>
+    <NavigationPage>
+      <x:Arguments>
+                <ContentPage>
+                    <Label
+                        Margin="0,30,0,0"
+                        HorizontalOptions="Center"
+                        FontSize="Large"
+                        Text="{Binding UserName,StringFormat='Welcome, {0}'}" />
+                </ContentPage>
+            </x:Arguments>
+    </NavigationPage>
+  </MasterDetailPage.Detail>
+</MasterDetailPage>

@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="Entmob.View.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Entmob.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding LoginViewModel, Source={StaticResource ViewModelLocator}}"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Big">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="700"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="left.Width" Value="750"/>
+                        <Setter Target="Top.Height" Value="250"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="left.Width" Value="30"/>
+                        <Setter Target="Top.Height" Value="90"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid Name="left" />
+        <Grid Name="Top" />
+
+        <TextBox Name="emailTextBox"
+                 Width="300"
+                 Margin="5"
+                 Text="{Binding Email, Mode=TwoWay}"
+                 PlaceholderText="Email"
+                 RelativePanel.RightOf="left"
+                 RelativePanel.Below="Top"
+
+        />
+        <PasswordBox Name="passwordTextBox" 
+                     Width="300"
+                     Margin="5"
+                     Password="{Binding Password, Mode=TwoWay}"
+                     PlaceholderText="Password"
+                     RelativePanel.Below="emailTextBox"
+                     RelativePanel.RightOf="left"
+
+        />
+        <Button Name="loginButton"
+                Content="Login"
+                Width="150"
+                Margin="75 5"
+                Command="{Binding LoginCommand, Mode=TwoWay}"
+                RelativePanel.Below="passwordTextBox"
+                RelativePanel.RightOf="left"
+        />
+        <TextBlock Name="formatStudentTextBlock"
+                   RelativePanel.Below="loginButton"
+                   Margin="15 25 0 0"
+                   RelativePanel.RightOf="left"
+        >
+            <Bold>Student:</Bold> [Login Number]@student.pxl.be
+        </TextBlock>
+        <TextBlock Name="formatStaffTextBlock"
+                   RelativePanel.Below="formatStudentTextBlock"
+                   Margin="15 5 0 0"
+                   RelativePanel.RightOf="left"
+        >
+            <Bold>Staff:</Bold> [Login Number]@pxl.be
+        </TextBlock>
+    </RelativePanel>
+</Page>

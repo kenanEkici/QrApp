@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="enterprisembile.Views.EventMenuPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="scanBtnImage" Command="{Binding MyRequiredCommand}" CommandParameter="RequiredEventsPage" Image="scan.png" Grid.Row="0" Grid.Column="0"/>
+                <Label Font="10" HorizontalTextAlignment="Center" Text="Required" Grid.Row="1" Grid.Column="0" Margin="0"/>
+                
+                <Button x:Name="QRBtnImage" Command="{Binding MyEventNavigateCommand}" CommandParameter="MyEventPage" Image="QR.png" Grid.Row="0" Grid.Column="1"/>
+                <Label Font="10" HorizontalTextAlignment="Center" Text="My Events" Grid.Row="1" Grid.Column="1" Margin="0"/>
+          </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

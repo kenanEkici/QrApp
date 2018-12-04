@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="enterprisembile.Views.MyEventDetailPage">
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <Label 
+                HorizontalOptions="Center" 
+                Text="{Binding EventDetails.Title, Converter={StaticResource TitleConverter}}"
+                Margin="0,20,0,20"
+                FontSize="Large">
+            </Label>
+            <Label 
+                HorizontalOptions="Center"
+                FontAttributes="Bold"
+                Text="Participants"                
+                Margin="0,20,0,10"
+                FontSize="Small">
+            </Label>
+            <ScrollView>
+                <ListView
+                    HorizontalOptions="Fill"
+                    ItemsSource="{Binding Participants}"
+                    SeparatorColor="Gray">                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>                            
+                            <ViewCell>
+                                <Grid>
+                                    <Label Margin="5" Grid.Column="0" Text="{Binding CardNumber}" FontAttributes="Bold" />
+                                    <Label Margin="5" Grid.Column="1" Text="{Binding FirstName}"  />
+                                    <Label Margin="5" Grid.Column="2" Text="{Binding LastName}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>            
+            <Button 
+                HorizontalOptions="Center"
+                Text="Display QR-code"
+                Command="{Binding ShowQrCommand}">
+            </Button>
+            <Button 
+                HorizontalOptions="Center"
+                Text="Scan participant"
+                x:Name="ScanButton"
+                Command="{Binding ScanParticipantCommand}">                
+            </Button>
+        </StackLayout>        
+    </ContentPage.Content>
+</ContentPage>

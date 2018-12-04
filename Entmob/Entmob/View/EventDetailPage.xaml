@@ -1,0 +1,151 @@
+﻿<Page
+    x:Class="Entmob.View.EventDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Entmob.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converter="using:Entmob.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converter:DateConverter x:Key="DateConverter"></converter:DateConverter>
+    </Page.Resources>
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Big">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="700"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="requiredPartiesTextBlock.(RelativePanel.RightOf)" Value="idTextBlock"/>
+                        <Setter Target="requiredGroupsListView.(RelativePanel.RightOf)" Value="titleTextBox"/>
+                        <Setter Target="saveButton.(RelativePanel.Below)" Value="ownerPreTextBlock"/>
+                        <Setter Target="editButton.(RelativePanel.RightOf)" Value="requiredPartiesTextBlock"/>
+                        
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="requiredPartiesTextBlock.(RelativePanel.Below)" Value="ownerPreTextBlock"/>
+                        <Setter Target="requiredGroupsListView.(RelativePanel.Below)" Value="requiredPartiesTextBlock"/>
+                        <Setter Target="editButton.(RelativePanel.Below)" Value="ownerPreTextBlock"/>
+                        <Setter Target="editButton.(RelativePanel.RightOf)" Value="requiredPartiesTextBlock"/>
+                        <Setter Target="saveButton.(RelativePanel.Below)" Value="requiredGroupsListView"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Border Name="idTextBlock"
+                Margin="15 0 0 10"
+                Padding="5"
+                Background="Gainsboro"
+                Width="330"
+                >
+            <TextBlock 
+                Text="Details"    
+            />
+        </Border>
+
+        <TextBox Name="titleTextBox"
+                 Margin="15 5"
+                 Width="330"
+                 PlaceholderText="Event Title"
+                 RelativePanel.Below="idTextBlock"
+                 Text="{Binding SelectedEvent.Title, Mode=TwoWay }"
+                 />
+
+        <TextBox Name="descriptionTextBox"
+                 Margin="15 5"
+                 Width="330"
+                 Height="400"
+                 Text="{Binding SelectedEvent.Description, Mode=TwoWay}"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 PlaceholderText="Event Description"
+                 RelativePanel.Below="titleTextBox"
+                 />
+
+        <DatePicker Name="eventDatePicker"
+                    Margin="15 5"
+                    Width="330"
+                    Date="{Binding SelectedEvent.Date, Mode=TwoWay, Converter={StaticResource DateConverter}}"
+                    RelativePanel.Below="descriptionTextBox"
+                    />
+
+        <TextBox Name="locationtextBox"
+                 Margin="15 5"
+                 Width="330"
+                 Text="{Binding SelectedEvent.Location, Mode=TwoWay}"
+                 PlaceholderText="Location"
+                 RelativePanel.Below="eventDatePicker"
+                 />
+
+        <TextBox Name="courseTextBox"
+                 Margin="15 5"
+                 Width="330"
+                 Text="{Binding SelectedEvent.Course, Mode=TwoWay}"
+                 PlaceholderText="Course"
+                 RelativePanel.Below="locationtextBox"
+                 />
+
+        <TextBlock Name="ownerPreTextBlock"
+                   Margin="15 5 0 5"
+                   Width="115"
+                   Text="Event created by"
+                   RelativePanel.Below="courseTextBox"
+                   />
+
+        <TextBlock Name="ownerTextBlock"
+                   Margin="0 5 5 5"
+                   Width="215"
+                   Text="{Binding SelectedEvent.Owner.FullName, Mode=OneWay}"
+                   RelativePanel.Below="courseTextBox"
+                   RelativePanel.RightOf="ownerPreTextBlock"
+                   />
+        
+        <Button Name="saveButton"
+                Content="Save"
+                Width="330"
+                Margin="15 15 0 10"
+                Command="{Binding SaveCommand}"
+                />
+
+        <Border Name="requiredPartiesTextBlock"
+                Margin="15 0 0 10"
+                Padding="5"
+                Background="Gainsboro"
+                Width="200"
+        >
+            <TextBlock 
+                Text="Required Parties"    
+            />
+        </Border>
+
+        <Button Name="editButton"
+                Content="Edit"
+                Command="{Binding EditPartyMembersCommand}"
+                Width="115"
+                Height="30"
+                Margin="15 0"
+        />
+
+        <ListView Name="requiredGroupsListView"
+                  Margin="15 5"
+                  Width="330"
+                  Background="Gainsboro"
+                  ItemsSource="{Binding Parties}"
+                  RelativePanel.Below="requiredPartiesTextBlock"
+                  DisplayMemberPath="Name"
+                  >
+
+        </ListView>
+    </RelativePanel>
+</Page>
+
